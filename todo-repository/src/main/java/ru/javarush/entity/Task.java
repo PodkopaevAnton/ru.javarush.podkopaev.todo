@@ -1,9 +1,6 @@
-package ru.javarush.todo.entity;
+package ru.javarush.entity;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,11 +12,13 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "task")
+@Entity
+@Table(schema = "todo", name = "task")
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
-    String description;
-    Status status;
+    private Integer id;
+    private String description;
+    @Enumerated(EnumType.ORDINAL)
+    private Status status;
 }
