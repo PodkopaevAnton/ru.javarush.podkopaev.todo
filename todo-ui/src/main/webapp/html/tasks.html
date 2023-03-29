@@ -3,19 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>tasks</title>
+    <link href="s">
 </head>
 <body>
     <table>
         <thead>
-        <th>ID</th>
-        <th>Description</th>
-        <th>Status</th>
+        <tr>
+            <th>ID</th>
+            <th>Description</th>
+            <th>Status</th>
+        </tr>
         </thead>
         <tbody>
         <tr th:each="task,number : ${tasks}">
-            <td th:text="${task.id}"></td>
-            <td th:text="${task.description}" th:id="'description_'+${task.id}"></td>
-            <td th:text="${task.status}" th:id="'status_'+${task.id}"></td>
+            <td th:text="${task.id}" />
+            <td th:text="${task.description}" th:id="'description_' + ${task.id}"/>
+            <td th:text="${task.status}" th:id="'status_' + ${task.id}"/>
         </tr>
         </tbody>
     </table>

@@ -16,24 +16,14 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 public class AppConfig {
-
     @Bean
-    public LocalSessionFactoryBean sessionFactoryBean(){
+    public LocalSessionFactoryBean sessionFactoryBean() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
         sessionFactory.setPackagesToScan("ru.javarush.entity");
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }
-
-    private Properties hibernateProperties() {
-        Properties properties = new Properties();
-        properties.put(Environment.DIALECT,"org.hibernate.dialect.MySQLDialect");
-        properties.put(Environment.DRIVER, "com.p6spy.engine.spy.P6SpyDriver");
-        properties.put(Environment.HBM2DDL_AUTO, "validate");
-        return properties;
-    }
-
     @Bean
     public DataSource dataSource() {
         HikariDataSource dataSource = new HikariDataSource();
@@ -46,9 +36,17 @@ public class AppConfig {
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory factory){
+    public PlatformTransactionManager transactionManager(EntityManagerFactory factory) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(factory);
         return transactionManager;
+    }
+
+    private Properties hibernateProperties() {
+        Properties properties = new Properties();
+        properties.put(Environment.DIALECT, "org.hibernate.dialect.MySQLDialect");
+        properties.put(Environment.DRIVER, "com.p6spy.engine.spy.P6SpyDriver");
+        properties.put(Environment.HBM2DDL_AUTO, "validate");
+        return properties;
     }
 }
