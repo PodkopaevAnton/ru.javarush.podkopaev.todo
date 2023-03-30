@@ -14,7 +14,7 @@ function edit_task(task_id) {
     $(identifier_delete).remove();
 
     let identifier_edit = "#edit_" + task_id;
-    let save_tag = "<button id='save_" + task_id + "'>Save</button>";
+    let save_tag = "<button  id='save_" + task_id + "' class=\"btn btn-primary\" type=\"button\">Save</button>";
     $(identifier_edit).html(save_tag);
     let property_save_tag = "update_task(" + task_id + ")";
     $(identifier_edit).attr("onclick", property_save_tag);
