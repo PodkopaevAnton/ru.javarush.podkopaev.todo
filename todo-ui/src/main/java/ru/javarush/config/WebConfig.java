@@ -30,7 +30,7 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public SpringResourceTemplateResolver templateResolver(){
+    public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
         resolver.setApplicationContext(applicationContext);
         resolver.setPrefix("/html/");
@@ -41,7 +41,7 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public SpringTemplateEngine engine(){
+    public SpringTemplateEngine engine() {
         SpringTemplateEngine engine = new SpringTemplateEngine();
         engine.setTemplateResolver(templateResolver());
         engine.setEnableSpringELCompiler(true);

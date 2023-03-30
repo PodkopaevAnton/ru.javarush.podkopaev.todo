@@ -3,7 +3,7 @@ package ru.javarush.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.javarush.dao.TaskDAO;
+import ru.javarush.dao.TaskDao;
 import ru.javarush.entity.Status;
 import ru.javarush.entity.Task;
 
@@ -14,7 +14,7 @@ import static java.util.Objects.isNull;
 @Service
 @AllArgsConstructor
 public class TaskService {
-    private final TaskDAO taskDAO;
+    private final TaskDao taskDAO;
 
     public List<Task> getAll(int offset, int limit) {
         return taskDAO.getAll(offset, limit);
@@ -36,7 +36,7 @@ public class TaskService {
         taskDAO.saveOrUpdate(task);
         return task;
     }
-
+    @Transactional
     public Task create(String description, Status status) {
         Task task = new Task();
         task.setDescription(description);

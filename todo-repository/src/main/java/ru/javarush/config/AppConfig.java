@@ -20,7 +20,7 @@ public class AppConfig {
     public LocalSessionFactoryBean sessionFactoryBean() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("ru.javarush.entity");
+        sessionFactory.setPackagesToScan("ru.javarush");
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }

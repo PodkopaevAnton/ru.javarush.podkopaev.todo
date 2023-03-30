@@ -16,6 +16,7 @@
             <groupId>ru.javarush</groupId>
             <artifactId>todo-repository</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
