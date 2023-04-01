@@ -1,57 +1,18 @@
 package ru.javarush.service;
 
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import ru.javarush.dao.TaskDao;
 import ru.javarush.entity.Status;
 import ru.javarush.entity.Task;
 
 import java.util.List;
 
-import static java.util.Objects.isNull;
+public interface TaskService {
+    List<Task> getAll(int offset, int limit);
 
-@Service
-@AllArgsConstructor
-public class TaskService {
-    private final TaskDao taskDAO;
+    int getAllCount();
 
-    public List<Task> getAll(int offset, int limit) {
-        return taskDAO.getAll(offset, limit);
-    }
+    Task edit(int id, String description, Status status);
 
-    public int getAllCount() {
-        return taskDAO.getAllCount();
-    }
+    Task create(String description, Status status);
 
-    @Transactional
-    public Task edit(int id, String description, Status status) {
-        Task task = taskDAO.getById(id);
-        if (isNull(task)) {
-            throw new RuntimeException("Not found");
-        }
-
-        task.setDescription(description);
-        task.setStatus(status);
-        taskDAO.saveOrUpdate(task);
-        return task;
-    }
-    @Transactional
-    public Task create(String description, Status status) {
-        Task task = new Task();
-        task.setDescription(description);
-        task.setStatus(status);
-        taskDAO.saveOrUpdate(task);
-        return task;
-    }
-
-    @Transactional
-    public void delete(int id) {
-        Task task = taskDAO.getById(id);
-        if (isNull(task)) {
-            throw new RuntimeException("Not found");
-        }
-
-        taskDAO.delete(task);
-    }
+    void delete(int id);
 }

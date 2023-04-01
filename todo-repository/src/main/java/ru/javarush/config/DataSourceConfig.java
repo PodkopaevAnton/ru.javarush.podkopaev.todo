@@ -15,12 +15,12 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-public class AppConfig {
+public class DataSourceConfig {
     @Bean
     public LocalSessionFactoryBean sessionFactoryBean() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("ru.javarush");
+        sessionFactory.setPackagesToScan("ru.javarush.entity");
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }
@@ -30,7 +30,7 @@ public class AppConfig {
         dataSource.setDriverClassName("com.p6spy.engine.spy.P6SpyDriver");
         dataSource.setJdbcUrl("jdbc:p6spy:mysql://localhost:3306/todo");
         dataSource.setUsername("root");
-        dataSource.setPassword("root");
+        dataSource.setPassword("89200690595xyuopcrunk");
         dataSource.setMaximumPoolSize(10);
         return dataSource;
     }
