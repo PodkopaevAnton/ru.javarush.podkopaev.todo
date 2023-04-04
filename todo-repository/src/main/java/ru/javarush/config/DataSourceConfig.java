@@ -2,20 +2,29 @@ package ru.javarush.config;
 
 import com.zaxxer.hikari.HikariDataSource;
 import jakarta.persistence.EntityManagerFactory;
-import org.hibernate.cfg.Environment;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
+import org.springframework.core.env.Environment;
 import javax.sql.DataSource;
+import java.util.Objects;
 import java.util.Properties;
 
 @Configuration
+@PropertySource("classpath:db.properties")
 @EnableTransactionManagement
 public class DataSourceConfig {
+
+    private final Environment environment;
+
+    public DataSourceConfig(Environment environment) {
+        this.environment = environment;
+    }
+
     @Bean
     public LocalSessionFactoryBean sessionFactoryBean() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
@@ -27,11 +36,11 @@ public class DataSourceConfig {
     @Bean
     public DataSource dataSource() {
         HikariDataSource dataSource = new HikariDataSource();
-        dataSource.setDriverClassName("com.p6spy.engine.spy.P6SpyDriver");
-        dataSource.setJdbcUrl("jdbc:p6spy:mysql://localhost:3306/todo");
-        dataSource.setUsername("root");
-        dataSource.setPassword("root");
-        dataSource.setMaximumPoolSize(10);
+        dataSource.setDriverClassName(Objects.requireNonNull(environment.getProperty("database.driver")));
+        dataSource.setJdbcUrl(environment.getProperty("database.url"));
+        dataSource.setUsername(environment.getProperty("database.username"));
+        dataSource.setPassword(environment.getProperty("database.password"));
+        dataSource.setMaximumPoolSize(Integer.parseInt(Objects.requireNonNull(environment.getProperty("database.maximum_pull_size"))));
         return dataSource;
     }
 
@@ -44,9 +53,8 @@ public class DataSourceConfig {
 
     private Properties hibernateProperties() {
         Properties properties = new Properties();
-        properties.put(Environment.DIALECT, "org.hibernate.dialect.MySQLDialect");
-        properties.put(Environment.DRIVER, "com.p6spy.engine.spy.P6SpyDriver");
-        properties.put(Environment.HBM2DDL_AUTO, "validate");
+        properties.put("hibernate.dialect", environment.getProperty("hibernate.dialect"));
+        properties.put("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto"));
         return properties;
     }
 }
